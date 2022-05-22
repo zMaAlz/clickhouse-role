@@ -1,7 +1,7 @@
 Clickhouse-role
 =========
 
-Роль для Ansible 2.10 и новрее для установки СУБД Clickhouse на CentOS. 
+Роль для Ansible 2.10 и новее для установки СУБД Clickhouse на CentOS. 
 
 Requirements
 ------------
@@ -21,12 +21,14 @@ Dependencies
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Пример использования:
 
-  - name: Play name 
-    hosts: servers
-    roles:
-      - { role: username.rolename, x: 42 }
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  roles:
+    - clickhouse-role
+
 
 License
 -------
@@ -36,5 +38,5 @@ MIT
 Author Information
 ------------------
 
-[Git](https://github.com/zMaAlz/vector-role)
+[Git](https://github.com/zMaAlz/clickhouse-role)
 

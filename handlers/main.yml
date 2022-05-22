@@ -1,7 +1,11 @@
 ---
 # handlers file for clickhouse-role
-- name: Start clickhouse service
+- name: Restart clickhouse service
   become: true
   ansible.builtin.service:
     name: clickhouse-server
     state: restarted
+- name: start clickhouse-server(sysemctl)
+  become: true
+  ansible.builtin.command: "systemctl start clickhouse-server.service"
+  ignore_errors: yes
