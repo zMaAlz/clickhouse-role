@@ -1,0 +1,26 @@
+---
+# tasks file for clickhouse-role
+- block:
+    - name: Get clickhouse distrib (RPM)
+      ansible.builtin.get_url:
+        url: "https://packages.clickhouse.com/rpm/stable/{{ item }}-{{ clickhouse_version }}.noarch.rpm"
+        dest: "./{{ item }}-{{ clickhouse_version }}.rpm"
+        with_items: "{{ clickhouse_packages }}"
+  rescue:
+    - name: Get clickhouse distrib (RPM)
+      ansible.builtin.get_url:
+        url: "https://packages.clickhouse.com/rpm/stable/clickhouse-common-static-{{ clickhouse_version }}.x86_64.rpm"
+        dest: "./clickhouse-common-static-{{ clickhouse_version }}.rpm"
+        notify: Start clickhouse service
+- name: Install clickhouse packages (RPM)
+  become: true
+  ansible.builtin.yum:
+    name:
+      - clickhouse-common-static-{{ clickhouse_version }}.rpm
+      - clickhouse-client-{{ clickhouse_version }}.rpm
+      - clickhouse-server-{{ clickhouse_version }}.rpm
+- name: Copy clickhouse config
+      become: true
+      template:
+        src: "templates/config.xml"
+        dest: "/etc/clickhouse-server/config.d/config.xml"
